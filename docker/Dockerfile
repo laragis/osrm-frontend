@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM node:18-alpine
 
 # Enables customized options using environment variables
 ENV OSRM_BACKEND='http://localhost:5000'
@@ -10,17 +10,17 @@ ENV OSRM_MAPBOX_TOKEN='pk.eyJ1IjoibXNsZWUiLCJhIjoiclpiTWV5SSJ9.P_h8r37vD8jpIH1A6
 
 # Copy package.json
 RUN mkdir -p /src
-COPY package.json /src
+
+WORKDIR /src
+
+COPY package.json .
 
 # Install app dependencies
-RUN apk add --no-cache sed nodejs && \
-    cd /src && \
-    npm install
+RUN yarn install
 
 # Create app directory
-COPY . /src
-WORKDIR /src
+COPY . .
 
 # Run App
 EXPOSE 9966
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

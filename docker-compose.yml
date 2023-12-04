@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  osrm-frontend:
+    image: ttungbmt/osrm-frontend
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    environment:
+      OSRM_BACKEND: 'https://router.project-osrm.org'
+      OSRM_CENTER: '10.768555807732437,106.69647216796876'
+      OSRM_ZOOM: '10'
+      OSRM_LANGUAGE: 'vi'
+      OSRM_LABEL: 'Car (fastest)'
+      OSRM_MAPBOX_TOKEN: 'pk.eyJ1IjoidHR1bmdibXQiLCJhIjoiY2xwcWxha3ZpMDF1ZzJrbzhoNjVkaDh1cSJ9.zBhbsxwKaFU5ezIbQ3ITzw'
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 9966:9966
